@@ -1,5 +1,7 @@
-.env
-.idea/
+.venv/
 __pycache__/
-*.pyc
-tasks.db
+*.py[cod]
+.pytest_cache/
+.env
+*.db
+.idea/

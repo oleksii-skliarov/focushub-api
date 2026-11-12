@@ -1,5 +1,4 @@
-from pydantic import BaseModel, EmailStr
-from typing import Optional
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class TaskCreate(BaseModel):
@@ -7,18 +6,22 @@ class TaskCreate(BaseModel):
     completed: bool = False
 
 
+class TaskUpdate(BaseModel):
+    title: str | None = None
+    completed: bool | None = None
+
 
 class TaskResponse(TaskCreate):
     id: int
     owner_id: int
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class UserBase(BaseModel):
     username: str
     email: EmailStr
+
 
 class UserCreate(UserBase):
     password: str
@@ -28,10 +31,4 @@ class UserResponse(UserBase):
     id: int
     tasks: list[TaskResponse] = []
 
-    class Config:
-        from_attributes = True
-
-
-class TaskUpdate(BaseModel):
-    title: str | None = None
-    completed: bool | None = None
+    model_config = ConfigDict(from_attributes=True)
